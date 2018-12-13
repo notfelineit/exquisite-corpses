@@ -1,8 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import Sound from 'react-sound'
 
 export const TORSO_TYPE = 'Torso'
 export const BOTTOM_TYPE = 'Bottom'
+const IMAGE_OFFSET = 3000
 
 const bodyPartStyle = {
   width: "100%"
@@ -31,12 +33,18 @@ class BodyPart extends React.Component {
   }
 
   componentDidMount() {
-    this.interval = setInterval(() => {
+    const changeImage = () => {
       this.setState((prevState) => {
         const nextImageIndex = (prevState.imageIndex + 1) % prevState.images.length
+        console.log(`${this.props.type} - ${nextImageIndex}`)
         return { imageIndex: nextImageIndex }
       })
-    }, 1000);
+    }
+
+    (function continuouslyChangeImage() {
+      changeImage()
+      setTimeout(continuouslyChangeImage, Math.random() * IMAGE_OFFSET);
+    })()
   }
 
   componentWillUnmount() {
@@ -46,7 +54,15 @@ class BodyPart extends React.Component {
   render() {
     const { images, imageIndex } = this.state
     const { type } = this.props
-    return <div style={bodyPartStyle} ><img src={images[imageIndex]} /></div>
+    return (
+      <div style={bodyPartStyle}>
+        <Sound
+          url="../sounds/tick.mp3"
+          playStatus={Sound.status.PLAYING}
+        />
+        <img src={images[imageIndex]} />
+      </div>
+    )
   }
 }
 
