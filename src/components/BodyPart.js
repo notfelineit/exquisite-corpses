@@ -1,10 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Sound from 'react-sound'
+import tick from '../sounds/tick.mp3'
+import beep from '../sounds/beep.mp3'
 
 export const TORSO_TYPE = 'Torso'
 export const BOTTOM_TYPE = 'Bottom'
-const IMAGE_OFFSET = 3000
+const IMAGE_OFFSET = 4000
 
 const bodyPartStyle = {
   width: "100%"
@@ -23,7 +25,8 @@ function getImages(type) {
 
 class BodyPart extends React.Component {
   state = {
-    imageIndex: 0
+    imageIndex: 0,
+    playTick: false
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -32,11 +35,14 @@ class BodyPart extends React.Component {
     return { images }
   }
 
+  tick = () => {
+    this.setState({ playTick: true })
+  }
+
   componentDidMount() {
     const changeImage = () => {
       this.setState((prevState) => {
         const nextImageIndex = (prevState.imageIndex + 1) % prevState.images.length
-        console.log(`${this.props.type} - ${nextImageIndex}`)
         return { imageIndex: nextImageIndex }
       })
     }
@@ -45,20 +51,18 @@ class BodyPart extends React.Component {
       changeImage()
       setTimeout(continuouslyChangeImage, Math.random() * IMAGE_OFFSET);
     })()
-  }
 
-  componentWillUnmount() {
-    clearInterval(this.interval)
+    document.addEventListener('click', this.tick);
   }
 
   render() {
-    const { images, imageIndex } = this.state
+    const { images, imageIndex, playTick } = this.state
     const { type } = this.props
     return (
       <div style={bodyPartStyle}>
         <Sound
-          url="../sounds/tick.mp3"
-          playStatus={Sound.status.PLAYING}
+          url={beep}
+          playStatus={playTick ? Sound.status.PLAYING : Sound.status.STOPPED}
         />
         <img src={images[imageIndex]} />
       </div>
