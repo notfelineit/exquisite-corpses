@@ -8,13 +8,16 @@ const exquisiteCorpseStyle = {
   width: '100vw',
   display: 'flex',
   justifyContent: 'center',
-  alignItems: 'center',
-  color: 'white',
-  flexDirection: 'column'
+
 }
 const exquisiteCorpseContentStyle = {
   width: "320px",
-  height: "100%"
+  height: "100%",
+  display: "flex",
+  justifyContent: 'center',
+  alignItems: 'center',
+  alignContent: 'center',
+  flexDirection: 'column'
 }
 
 const ExquisiteCorpse = () => {
@@ -28,4 +31,5 @@ const ExquisiteCorpse = () => {
     </div>
   )
 }
+
 export default ExquisiteCorpse

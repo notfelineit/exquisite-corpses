@@ -3,7 +3,7 @@ import Webcam from 'react-webcam'
 
 class Head extends React.PureComponent {
   render() {
-    return <Webcam style={{ height: "33%", width: "100%" }} audio={false} />
+    return <Webcam style={{ height: "auto", width: "100%" }} audio={false} />
   }
 }
 
