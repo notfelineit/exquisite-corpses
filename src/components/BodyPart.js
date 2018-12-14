@@ -9,7 +9,7 @@ export const BOTTOM_TYPE = 'Bottom'
 const IMAGE_OFFSET = 4000
 
 const bodyPartStyle = {
-  width: "100%"
+  maxWidth: "100%"
 }
 
 function importAll(r) {
@@ -64,7 +64,7 @@ class BodyPart extends React.Component {
           url={beep}
           playStatus={playTick ? Sound.status.PLAYING : Sound.status.STOPPED}
         />
-        <img src={images[imageIndex]} />
+        <img style={{width: "100%"}} src={images[imageIndex]} />
       </div>
     )
   }
